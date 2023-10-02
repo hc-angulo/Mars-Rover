@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout::head">
+</head>
+
+<body>
+    <header th:replace="layout/layout::header">
+    </header>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="myColumn col-5">
+                <form novalidate th:action="@{/api/marsRover/result}" method="post" th:object="${instruction}">
+                    <div class="row d-flex d-flex justify-content-center mx-4">
+                        <div class="col-12 d-flex justify-content-center mb-2">
+                            <img th:src="@{/images/search.png}" alt="" width="80" height="80">
+                        </div>
+                        <div class="col-12 form-group">
+                            <label for="validationServer03" class="form-label">Instrucciones</label>
+                            <input type="text" class="form-control is-invalid" th:field="*{userInstruction}"
+                                id="validationServer03" aria-describedby="validationServer03Feedback">
+                            <span id="validationServer03Feedback" class="invalid-feedback"
+                                th:if="${#fields.hasErrors('userInstruction')}" th:errors="*{userInstruction}"></span>
+                        </div>
+                        <div class="d-grid mb-1 mt-4 col-6">
+                            <input type="submit" value="Enviar" class="btn btn-dark">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:replace="layout/layout::script">
+    </div>
+</body>
+
+</html>

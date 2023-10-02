@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout/layout::head">
+</head>
+
+
+<body>
+    <header th:replace="layout/layout::header">
+    </header>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="row myColumn col-7">
+
+                <div class="row col-12">
+                    <div class="col-12 d-flex justify-content-center mt-5 mb-3">
+                        <h4>Resumen informativo de tu jugada</h4>
+                    </div>
+                    <div class="col-12 d-flex justify-content-start">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Posición inicial:</strong>
+                                <p th:text="${result.roverPositions[0]}"></p>
+                            </li>
+                            <li class="list-group-item"><strong>Posición final:</strong>
+                                <p th:text="${result.roverPositions[result.roverPositions.size() - 1]}"></p>
+                            </li>
+                            <li class="list-group-item"><strong>Tus instrucciones:</strong>
+                                <p th:text="${result.messages[0]}"></p>
+                            </li>
+                            <li class="list-group-item"><strong>Instrucciones ejecutadas:</strong>
+                                <p th:text="${result.messages[1]}"></p>
+                            </li>
+                            <li th:if="${result.roverAndObs.obstacle != null}" class="list-group-item">
+                                <strong>Obstáculo:</strong>
+                                <p th:text="${result.roverAndObs.obstacle}"></p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Table -->
+                <div class="row col-12  d-flex justify-content-center mb-5">
+                    <div class="col-12 d-flex justify-content-center mt-4 mb-3">
+                        <h4>Histórico de movimientos de tu jugada</h4>
+                    </div>
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">X</th>
+                                    <th scope="col">Y</th>
+                                    <th scope="col">Cardinalidad</th>
+                                    <th scope="col">Orientación</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="position:${result.roverPositions}">
+                                    <td th:text="${position.x}"></td>
+                                    <td th:text="${position.y}"></td>
+                                    <td th:text="${position.cardinality}"></td>
+                                    <td class="d-flex justify-content-start">
+                                        <span th:if="${position.cardinality.toString() == 'EAST'}">
+                                            <i class="fa-solid fa-right-long" style="color: #ef4136;"></i>
+                                        </span>
+                                        <span th:if="${position.cardinality.toString() == 'WEST'}">
+                                            <i class="fa-solid fa-right-long fa-rotate-180" style="color: #ef4136;"></i>
+                                        </span>
+                                        <span th:if="${position.cardinality.toString() == 'NORTH'}">
+                                            <i class="fa-solid fa-right-long fa-rotate-270" style="color: #ef4136;"></i>
+                                        </span>
+                                        <span th:if="${position.cardinality.toString() == 'SOUTH'}">
+                                            <i class="fa-solid fa-right-long fa-rotate-90" style="color: #ef4136;"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row col-12 ">
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn btn-dark btn-block"
+                            onclick="redireccionar('http://localhost:8080/api/marsRover')">Home</button>
+                    </div>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <button class="btn btn-dark btn-block"
+                            onclick="redireccionar('http://localhost:8080/api/marsRover/instructions')">Continuar
+                            juego</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function redireccionar(url) {
+            window.location.href = url;
+        }
+    </script>
+    <div th:replace="layout/layout::script">
+    </div>
+</body>
+
+</html>
